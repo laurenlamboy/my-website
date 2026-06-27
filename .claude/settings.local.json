@@ -4,7 +4,8 @@
       "Bash(python3 *)",
       "Bash(curl -s http://localhost:8000/styles.css)",
       "Bash(curl *)",
-      "Bash(sips *)"
+      "Bash(sips *)",
+      "mcp__Claude_Preview__preview_start"
     ]
   }
 }
