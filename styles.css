@@ -763,7 +763,7 @@ body.loaded .hero-cta      { animation: fadeUp 0.8s 0.75s var(--ease-out) both; 
 /* Masonry */
 .masonry {
   padding: 0 48px 120px;
-  columns: 3;
+  columns: 4;
   column-gap: 5px;
 }
 
