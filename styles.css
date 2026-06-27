@@ -312,7 +312,7 @@ body.loaded .hero-cta      { animation: fadeUp 0.8s 0.75s var(--ease-out) both; 
 
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: 100svh;
   padding: 0 0 100px;
   overflow: hidden;
 }
@@ -321,7 +321,7 @@ body.loaded .hero-cta      { animation: fadeUp 0.8s 0.75s var(--ease-out) both; 
   position: relative;
   z-index: 2;
   width: 56%;
-  min-height: 100vh;
+  min-height: 100svh;
   padding: 86px 0 80px 48px;
   display: flex;
   flex-direction: column;
@@ -763,20 +763,15 @@ body.loaded .hero-cta      { animation: fadeUp 0.8s 0.75s var(--ease-out) both; 
 /* Masonry */
 .masonry {
   padding: 0 48px 120px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 10px;
-  column-gap: 10px;
-  row-gap: 0;
+  columns: 3;
+  column-gap: 5px;
 }
 
 .masonry-item {
+  break-inside: avoid;
+  margin-bottom: 5px;
   overflow: hidden;
-  position: relative;
-  padding-bottom: 10px;
 }
-
-.masonry-item.wide { grid-column: span 2; }
 
 .masonry-item img {
   display: block;
@@ -974,7 +969,7 @@ body.loaded .hero-cta      { animation: fadeUp 0.8s 0.75s var(--ease-out) both; 
 ═══════════════════════════════════════ */
 
 @media (max-width: 1024px) {
-  .masonry { grid-template-columns: repeat(2, 1fr); }
+  .masonry { columns: 2; }
 
   .video-grid {
     grid-template-columns: 1fr;
@@ -1158,8 +1153,7 @@ body.loaded .hero-cta      { animation: fadeUp 0.8s 0.75s var(--ease-out) both; 
 
   .contact-page main { padding: 100px 24px 60px; }
 
-  .masonry { grid-template-columns: 1fr; }
-  .masonry-item.wide { grid-column: span 1; }
+  .masonry { columns: 1; }
 }
 
 @media (max-width: 480px) {
