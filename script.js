@@ -44,13 +44,13 @@ if (ring) {
   document.addEventListener('mousemove', (e) => {
     mx = e.clientX;
     my = e.clientY;
-  });
+  }, { passive: true });
 
   const lerp = () => {
-    rx += (mx - rx) * 0.13;
-    ry += (my - ry) * 0.13;
-    ring.style.left = rx + 'px';
-    ring.style.top  = ry + 'px';
+    rx += (mx - rx) * 0.2;
+    ry += (my - ry) * 0.2;
+    ring.style.transform =
+      'translate3d(' + rx + 'px, ' + ry + 'px, 0) translate(-50%, -50%)';
     requestAnimationFrame(lerp);
   };
   lerp();
@@ -168,6 +168,34 @@ if ('IntersectionObserver' in window) {
   }
 })();
 
+// ─── Photo grid — warm lazy images well before they enter view ───
+// Keeps loading="lazy" in the markup, but pre-fetches each file ~1000px
+// ahead of the viewport so it's cache-ready (no visible pop-in) by the
+// time the native lazy loader requests it.
+
+(function () {
+  if (!('IntersectionObserver' in window)) return;
+
+  const lazyImgs = document.querySelectorAll('.masonry-item img[loading="lazy"]');
+  if (!lazyImgs.length) return;
+
+  const warmIO = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const img = entry.target;
+      const url = img.getAttribute('src');
+      if (url && !img.complete) {
+        const pre = new Image();
+        pre.decoding = 'async';
+        pre.src = url;
+      }
+      obs.unobserve(img);
+    });
+  }, { rootMargin: '1000px 0px 1000px 0px' });
+
+  lazyImgs.forEach(img => warmIO.observe(img));
+})();
+
 // ─── Video page — click to play/pause ───
 
 document.querySelectorAll('.video-page .video-thumb').forEach(thumb => {
@@ -189,6 +217,43 @@ document.querySelectorAll('.video-page .video-thumb').forEach(thumb => {
 
   video.addEventListener('ended', () => item.classList.remove('playing'));
 });
+
+// ─── Home video reel — play only while in view ───
+
+const reelVideos = document.querySelectorAll('.video-reel-track video');
+
+if (reelVideos.length && 'IntersectionObserver' in window) {
+  const playReelVideo = (v) => {
+    const p = v.play();
+    if (p && typeof p.then === 'function') {
+      p.catch(err => {
+        console.error(
+          '[video-reel] playback failed:',
+          v.getAttribute('src'),
+          err && err.name ? err.name + ' — ' + err.message : err
+        );
+      });
+    }
+  };
+
+  const reelIO = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const v = entry.target;
+      if (entry.isIntersecting) {
+        playReelVideo(v);
+      } else {
+        v.pause();
+      }
+    });
+  }, {
+    // Start playback a bit before the clip is actually on screen so it
+    // has time to buffer; fire as soon as any part crosses that margin.
+    threshold: 0,
+    rootMargin: '300px 0px 300px 0px'
+  });
+
+  reelVideos.forEach(v => reelIO.observe(v));
+}
 
 // ─── Reduced motion ───
 

@@ -84,7 +84,7 @@ body.leaving .page-transition { opacity: 1; pointer-events: all; }
   pointer-events: none;
   z-index: 10000;
   transform: translate(-50%, -50%);
-  will-change: left, top;
+  will-change: transform;
   transition: width 0.3s var(--ease),
               height 0.3s var(--ease),
               border-color 0.3s,
@@ -1024,7 +1024,9 @@ body.loaded .hero-cta      { animation: fadeUp 0.8s 0.75s var(--ease-out) both; 
   }
 
   .hero-heading {
-    font-size: clamp(48px, 16vw, 80px);
+    font-size: clamp(45px, 15.3vw, 75px);
+    margin-top: 40px;
+    margin-left: -0.04em;
   }
 
   .hero-cta .btn-ghost { display: none; }
@@ -1046,16 +1048,16 @@ body.loaded .hero-cta      { animation: fadeUp 0.8s 0.75s var(--ease-out) both; 
 
   .hero-sub {
     font-size: 7.5px;
-    margin-top: 64px;
+    margin-top: 20px;
   }
 
   .hero-cta {
-    margin-top: 28px;
+    margin-top: 20px;
   }
 
   .hero-cta .btn-fill {
-    font-size: 10px;
-    padding: 10px 18px;
+    font-size: 9px;
+    padding: 7px 14px;
   }
 
   .hero-images {
@@ -1103,7 +1105,7 @@ body.loaded .hero-cta      { animation: fadeUp 0.8s 0.75s var(--ease-out) both; 
   }
 
   .hero-img--4 {
-    top: 68%;
+    top: 72%;
     bottom: auto;
     left: calc(44% - 15px);
     right: auto;

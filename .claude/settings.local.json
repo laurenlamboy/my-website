@@ -13,7 +13,9 @@
       "WebFetch(domain:api.github.com)",
       "Bash(mkdir -p /Users/laurenlamboy/.claude/skills/no-ai-slop/agents)",
       "Read(//Users/laurenlamboy/.claude/skills/**)",
-      "Bash(npx skills *)"
+      "Bash(npx skills *)",
+      "Read(//private/tmp/**)",
+      "Bash(qlmanage -t -s 1200 -o . /Users/personal/my-website/video/1-sephora.mp4)"
     ]
   }
 }
