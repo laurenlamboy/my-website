@@ -5,7 +5,15 @@
       "Bash(curl -s http://localhost:8000/styles.css)",
       "Bash(curl *)",
       "Bash(sips *)",
-      "mcp__Claude_Preview__preview_start"
+      "mcp__Claude_Preview__preview_start",
+      "Bash(gh repo *)",
+      "Bash(gh api *)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:api.github.com)",
+      "Bash(mkdir -p /Users/laurenlamboy/.claude/skills/no-ai-slop/agents)",
+      "Read(//Users/laurenlamboy/.claude/skills/**)",
+      "Bash(npx skills *)"
     ]
   }
 }
