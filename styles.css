@@ -760,16 +760,20 @@ body.loaded .hero-cta      { animation: fadeUp 0.8s 0.75s var(--ease-out) both; 
   color: var(--gray-600);
 }
 
-/* Masonry */
+/* Masonry — CSS grid, fills left-to-right in HTML order.
+   grid-auto-rows is a fine-grained unit; JS (script.js) sets each
+   item's grid-row-end span from its width/height attributes so
+   the layout staggers like masonry with minimal gaps. */
 .masonry {
   padding: 0 48px 120px;
-  columns: 4;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   column-gap: 5px;
+  row-gap: 0;
+  grid-auto-rows: 5px;
 }
 
 .masonry-item {
-  break-inside: avoid;
-  margin-bottom: 5px;
   overflow: hidden;
 }
 
@@ -969,7 +973,7 @@ body.loaded .hero-cta      { animation: fadeUp 0.8s 0.75s var(--ease-out) both; 
 ═══════════════════════════════════════ */
 
 @media (max-width: 1024px) {
-  .masonry { columns: 2; }
+  .masonry { grid-template-columns: repeat(2, 1fr); }
 
   .video-grid {
     grid-template-columns: 1fr;
@@ -1155,7 +1159,7 @@ body.loaded .hero-cta      { animation: fadeUp 0.8s 0.75s var(--ease-out) both; 
 
   .contact-page main { padding: 100px 24px 60px; }
 
-  .masonry { columns: 1; }
+  .masonry { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 480px) {

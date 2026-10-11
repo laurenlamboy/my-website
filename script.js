@@ -131,13 +131,22 @@ if ('IntersectionObserver' in window) {
 // ─── Masonry row-span layout ───
 
 (function () {
-  const ROW_UNIT = 10;
+  const ROW_UNIT = 5; // px — matches the grid's row/column gap
+  const GAP = 5;
 
-  function spanItem(item) {
-    const img = item.querySelector('img');
-    if (!img || !img.naturalWidth || !img.naturalHeight) return;
+  // Read the aspect ratio from the <img>'s width/height attributes so
+  // the span can be set immediately, without waiting for the (possibly
+  // lazy, below-the-fold) image to load.
+  function dims(img) {
+    const w = parseInt(img.getAttribute('width'), 10) || img.naturalWidth;
+    const h = parseInt(img.getAttribute('height'), 10) || img.naturalHeight;
+    return (w && h) ? { w, h } : null;
+  }
+
+  function spanItem(item, size) {
     const w = item.getBoundingClientRect().width;
-    const h = w * (img.naturalHeight / img.naturalWidth) + 10; // +10 for padding-bottom gap
+    if (!w) return;
+    const h = w * (size.h / size.w) + GAP;
     item.style.gridRowEnd = 'span ' + Math.ceil(h / ROW_UNIT);
   }
 
@@ -147,10 +156,14 @@ if ('IntersectionObserver' in window) {
     grid.querySelectorAll('.masonry-item').forEach(item => {
       const img = item.querySelector('img');
       if (!img) return;
-      if (img.complete && img.naturalHeight) {
-        spanItem(item);
+      const size = dims(img);
+      if (size) {
+        spanItem(item, size);
       } else {
-        img.addEventListener('load', () => spanItem(item), { once: true });
+        img.addEventListener('load', () => {
+          const loaded = dims(img);
+          if (loaded) spanItem(item, loaded);
+        }, { once: true });
       }
     });
   }
