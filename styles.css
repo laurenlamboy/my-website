@@ -77,8 +77,8 @@ body.leaving .page-transition { opacity: 1; pointer-events: all; }
 
 .cursor-ring {
   position: fixed;
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
   border: 1.5px solid rgba(255, 255, 255, 0.55);
   border-radius: 50%;
   pointer-events: none;
@@ -92,8 +92,8 @@ body.leaving .page-transition { opacity: 1; pointer-events: all; }
 }
 
 .cursor-ring.expand {
-  width: 72px;
-  height: 72px;
+  width: 54px;
+  height: 54px;
   border-color: rgba(255, 255, 255, 0.4);
   background: rgba(255, 255, 255, 0.32);
 }
